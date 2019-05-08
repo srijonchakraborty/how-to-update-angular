@@ -1,0 +1,126 @@
+// This code was written by Srijon Chakraborty
+// All my other source codes are available on http://srijon.softallybd.com (Personal Blog)
+
+//UPGRADING ANGULAR 2,4, 5,6 PROJECTS TO ANGULAR 7 .NET MVC App//
+//YouTube Link : (Link Will be available soon...)
+                    Instructions:
+-------------------------------------------------------
+
+Step 1: Go To your Angular Project Directory using CMD or Terminal
+Now We are going to update global version.
+=> Prerequisite 
+         * Install Node.js Latest
+	 * Install TypeScript For Visual Studio Latest(FOR Windows Visual Studio)
+         * For Linux or MAC USE npm uninstall -g typescript@latest
+			        npm install -g typescript@latest
+Step 2:npm uninstall -g angular-cli
+       npm cache clean --force
+       npm install -g @angular/cli@latest
+
+Step 3:RUN thoso Commands
+(NOTE: if any of this command return error for specific version then use 
+       that version as the error says For Example: npm install zone.js@0.9.1 it 
+	dose not work and it says it requre 0.9.2 then use that version number for install.)
+
+(Version required according to Error While you try to update @angular/core OR @angular/cli)
+
+  => npm uninstall --save-dev angular-cli
+  =>npm install --save-dev @angular/cli@latest
+  =>npm i @angular/cdk@6 @angular/compiler-cli@6 @angular/material@6 rxjs@6 --save
+	=>npm install @angular/cdk@latest --save
+	=>npm install @angular/compiler-cli@latest --save 
+	=>npm install @angular/material@latest --save
+	=>npm install rxjs@latest --save
+	=>npm install popper.js@^1.14.3 --save
+	=>npm install jquery@3.3.1 --save
+	=>npm install bootstrap@4.1.1 --save
+	=>npm i rxjs-compat
+	=>npm install --save core-js@^2.5.0
+	=>npm install @angular/compiler@7.2.14
+	=>npm install @angular/common@7.2.14
+	=>npm install @angular/forms@7.2.14
+	=>npm install @angular/core@7.2.14
+	=>npm install @angular/animations@7.2.14
+	=>npm install @angular/platform-browser@7.2.14
+	=>npm install @angular/http@7.2.14
+	=>npm install zone.js@0.9.1
+	=>npm install typescript@3.4.5 
+
+Step 4: Now try to Update
+	=>ng update @angular/core
+	 NOTE :IF you get yellow colored Error then solve them by installing those package with specific version
+	=>ng update rxjs
+	 NOTE :IF you get yellow colored Error then solve them by installing those package with specific version
+	=>ng update @angular/cli
+	 NOTE :IF you get yellow colored Error then solve them by installing those package with specific version
+	=>ng update --all
+	 If ERROR FOUND LIKE =>> "Package "plugin-typescript" has an incompatible peer dependency to 
+	 "typescript" (requires "^2.4.0", would install "3.4.5")" THEN
+	=>USE ng update --all --force
+	=>ng update --all
+Step 5:	If Update Successful then 
+	=>ng build
+	If ERROR FOUND for typescript then install typescript  
+	=>npm install typescript@3.4.5 --save (Check the Version required according to Error)
+	=>ng build
+	If ERROR FOUND "core-js" THEN
+	=>npm install --save core-js@2.5.0 (Version required according to Error)
+	=>ng build
+	If ERROR FOUND for CSS FILE THEN Remove comments from specified CSS file
+	=>ng build (Now it Should work)
+	IF not then resolve errors and try to build
+
+FOR PROD : ng build --prod --base-href /bextest/ (Without Error)
+           ng build --prod --base-href /bextest/ --aot=false --build-optimizer=false [if error] for release
+
+Extra : If you are using ASP MVC WEB API or Other API for back-end
+	Then Enable API Cros share
+
+FOR C#(.NET) Web API 
+UPDATE your WebApiConfig file (Location: App_Start)
+by enabling EnableCors 
+
+public static class WebApiConfig
+    {
+        public static void Register(HttpConfiguration config)
+        {
+            //
+            config.Formatters.Clear();
+            config.Formatters.Add(new JsonMediaTypeFormatter());
+            config.MessageHandlers.Add(new AuthenticationHandler());
+            config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.LocalOnly;
+#if DEBUG
+            config.EnableCors(new EnableCorsAttribute("http://localhost:4200", headers: "*", methods: "*"));//Angular Host Url
+#else
+            config.EnableCors();
+#endif
+            //config.EnableCors();
+            // Web API routes
+            config.MapHttpAttributeRoutes();
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
+        }
+    }
+
+Finally If you have any app.api.service.ts file or Similar file 
+Then update your base URI 
+	//public baseUri: string = 'http://localhost:62524/api/';//FOR Dedug (API URL)
+    	// public baseUri: string = '/beximco-angular/api/';//FOR Publish
+
+Publish in IIS: 
+(Install URLRewrite for angular Project in IIS) 
+	1.Publish your API in certain folder
+	2.Now use cmd and go to angular project path using cmd and RUN
+	 ng build --prod --base-href /bextest/ [Note: /bextest/ is folder name in server where you are going to publish]
+	3.If your Project dose have error in angular part and still you want to publish then
+	 ng build --prod --base-href /bextest/ --aot=false --build-optimizer=false
+	4.Now go to dist folder and copy all file and paste then where you api is published(in Folder).
+	5.Copy and paste the folder in you server.
+	6.And host the application.
+	
+
+
+
