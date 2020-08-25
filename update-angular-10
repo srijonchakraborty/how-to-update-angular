@@ -1,0 +1,18 @@
+Step 1: Go To your Angular Project Directory using CMD or Terminal
+Now We are going to update global version.
+=> Prerequisite 
+         * Install Node.js Latest
+	 * Install TypeScript For Visual Studio Latest(FOR Windows Visual Studio)
+         * For Linux or MAC USE npm uninstall -g typescript@latest
+			        npm install -g typescript@latest
+Step 2:npm uninstall -g angular-cli
+       npm cache clean --force
+       npm install -g @angular/cli@latest
+
+Step 3:
+   Ref: https://www.freakyjolly.com/how-to-update-local-angular-cli-version/#.X0R7sMgzbIV
+   -- Install npm-check-updates
+      npm i -g npm-check-updates
+   -- Run npm-check-updates with -u, will upgrade package.json
+      ncu -u
+      npm install --save
