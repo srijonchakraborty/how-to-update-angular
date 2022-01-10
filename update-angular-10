@@ -16,3 +16,7 @@ Step 3:
    -- Run npm-check-updates with -u, will upgrade package.json
       ncu -u
       npm install --save
+      
+For Deploy USe 
+ng build --base-href=/nameofApplication/ --configuration production
+
